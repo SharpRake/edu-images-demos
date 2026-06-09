@@ -1,12 +1,12 @@
 FROM cgr.dev/chainguard/wordpress:latest-dev AS builder
-#trigger wp-config.php creation
-ENV WORDPRESS_DB_HOST=foo
 
 #copy wp-content folder
 COPY ./wp-content /usr/src/wordpress/wp-content
 
-#run entrypoint script
-RUN /usr/local/bin/docker-entrypoint.sh php-fpm --version
+USER root
+#copy WordPress source to document root and set up config
+RUN cp -r /usr/src/wordpress/. /var/www/html/ && \
+    cp /var/www/html/wp-config-docker.php /var/www/html/wp-config.php
 
 FROM cgr.dev/chainguard/wordpress:latest
 
