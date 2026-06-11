@@ -1,6 +1,7 @@
 services:
   app:
-    image: cgr.dev/chainguard/wordpress:latest-dev
+    build: .
+    image: wordpress-preview
     restart: unless-stopped
     environment:
       WORDPRESS_DB_HOST: mariadb
